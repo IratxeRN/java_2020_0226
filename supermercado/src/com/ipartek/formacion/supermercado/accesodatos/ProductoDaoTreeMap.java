@@ -1,5 +1,6 @@
 package com.ipartek.formacion.supermercado.accesodatos;
 
+import java.math.BigDecimal;
 import java.util.TreeMap;
 
 import com.ipartek.formacion.supermercado.modelos.Producto;
@@ -7,27 +8,37 @@ import com.ipartek.formacion.supermercado.modelos.Producto;
 public class ProductoDaoTreeMap implements Dao<Producto> {
 
 	private static TreeMap<Long, Producto> productos = new TreeMap<>();
-	
-	//SINGLETON
-	
-	// Ponemos privado el constructor por defecto para que nadie pueda crear instancias de esta clase de forma libre
-	// Con esto evitamos la posibilidad de que nadie haga new de esta clase (salvo esta clase en sí misma)
-	private ProductoDaoTreeMap() {}
-	
+
+	static {
+		productos.put(1L, new Producto(1L, "Beefeater", "Botella de ginebra que tle mola cannnnntidad", "beefeater.jpg",
+				new BigDecimal("12.95"), 20, "Litro", new BigDecimal("18.50"), 1));
+		productos.put(2L, new Producto(2L, "Beefeater light", "Botella de ginebra que tle mola cannnnntidad perrroooo más blarata", "beefeaterlight.jpg",
+				new BigDecimal("7.90"), null, "Litro", new BigDecimal("18.50"), 1));
+	}
+
+	// SINGLETON
+
+	// Ponemos privado el constructor por defecto para que nadie pueda crear
+	// instancias de esta clase de forma libre
+	// Con esto evitamos la posibilidad de que nadie haga new de esta clase (salvo
+	// esta clase en sí misma)
+	private ProductoDaoTreeMap() {
+	}
+
 	// Creamos el único objeto que va a existir de este tipo
 	private static ProductoDaoTreeMap INSTANCIA = new ProductoDaoTreeMap();
-	
+
 	// Creamos un método público que de acceso a la única instancia disponible
-	// Desde otras clases deberemos hacer 
+	// Desde otras clases deberemos hacer
 	// ProductoDaoTreeMap dao = ProductoDaoTreeMap.getInstancia();
 	// o mejor
 	// Dao<Producto> dao = ProductoDaoTreeMap.getInstancia();
-	public static ProductoDaoTreeMap getInstancia() { 
+	public static ProductoDaoTreeMap getInstancia() {
 		return INSTANCIA;
 	}
-	
-	//FIN SINGLETON
-	
+
+	// FIN SINGLETON
+
 	@Override
 	public Iterable<Producto> obtenerTodos() {
 		return productos.values();
