@@ -12,7 +12,7 @@ import com.ipartek.formacion.supermercado.accesodatos.Dao;
 import com.ipartek.formacion.supermercado.accesodatos.ProductoDaoTreeMap;
 import com.ipartek.formacion.supermercado.modelos.Producto;
 
-@WebServlet("/PrincipalServlet")
+@WebServlet("/principal")
 public class PrincipalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
