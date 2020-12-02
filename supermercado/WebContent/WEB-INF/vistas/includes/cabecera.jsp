@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- FontAwesome -->
 <link rel="stylesheet" href="css/all.min.css">
+<!-- Hoja de estilos personalizada -->
+<link rel="stylesheet" href="css/supermercado.css">
 
 <title>Supermercado</title>
 </head>
