@@ -30,8 +30,7 @@
 						<c:if test="${producto.descuento != null}">
 							<strong class="col text-danger">${producto.precioConDescuento}€</strong>
 						</c:if>
-						<small class="text-muted col text-center">${producto.precioUnidadMedida}€
-							/ ${producto.unidadMedida}</small>
+						<small class="text-muted col text-center">(${producto.precioUnidadMedida}€&nbsp;/&nbsp;${producto.unidadMedida})</small>
 						<small class="text-muted col text-right">${producto.cantidad} en stock</small>
 					</p>
 					<p class="card-text">
