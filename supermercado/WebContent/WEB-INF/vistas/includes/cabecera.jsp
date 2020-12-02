@@ -14,6 +14,8 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="css/bootstrap.min.css">
+<!-- FontAwesome -->
+<link rel="stylesheet" href="css/all.min.css">
 
 <title>Supermercado</title>
 </head>
