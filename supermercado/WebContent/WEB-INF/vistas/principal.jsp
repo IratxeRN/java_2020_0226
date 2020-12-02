@@ -18,7 +18,18 @@
 					<h5 class="card-title">${producto.nombre}</h5>
 					<p class="card-text">${producto.descripcion}</p>
 					<p class="card-text lead row">
-						<strong class="col">${producto.precio}€</strong>
+						<strong class="col">
+							<c:if test="${producto.descuento != null}">
+								<del>
+							</c:if>
+							${producto.precio}€
+							<c:if test="${producto.descuento != null}">
+								</del>
+							</c:if>
+						</strong>
+						<c:if test="${producto.descuento != null}">
+							<strong class="col text-danger">${producto.precioConDescuento}€</strong>
+						</c:if>
 						<small class="text-muted col text-center">${producto.precioUnidadMedida}€
 							/ ${producto.unidadMedida}</small>
 						<small class="text-muted col text-right">${producto.cantidad} en stock</small>
