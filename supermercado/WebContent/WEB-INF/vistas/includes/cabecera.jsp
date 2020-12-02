@@ -12,16 +12,14 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- FontAwesome -->
 <link rel="stylesheet" href="css/all.min.css">
 
 <title>Supermercado</title>
 </head>
 <body>
-
-	<header>
+	<header class="sticky-top">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="#">Supermercado</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -40,3 +38,4 @@
 			</div>
 		</nav>
 	</header>
+	<main class="container-fluid">
