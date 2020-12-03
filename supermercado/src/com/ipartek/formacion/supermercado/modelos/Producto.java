@@ -100,8 +100,6 @@ public class Producto {
 	}
 	
 	public BigDecimal getPrecioConDescuento() {
-		//return precio - precio * descuento / 100
-		
 		if(descuento == null || descuento == 0) {
 			return null;
 		}
@@ -110,6 +108,7 @@ public class Producto {
 			return BigDecimal.ZERO;
 		}
 		
+		//return precio - (precio * (descuento / 100));
 		return precio.subtract(precio.multiply(new BigDecimal(descuento).divide(new BigDecimal(100))));
 	}
 

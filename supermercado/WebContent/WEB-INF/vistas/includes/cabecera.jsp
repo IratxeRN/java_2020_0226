@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!doctype html>
 <html lang="es">
 <head>
 
+<%-- <base href="/supermercado/" /> --%>
 <base href="${pageContext.request.contextPath}/" />
 <!-- Required meta tags -->
 <meta charset="utf-8">
