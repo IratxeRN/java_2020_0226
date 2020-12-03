@@ -60,4 +60,29 @@ public class UsuarioDaoTreeMap implements Dao<Usuario> {
 	public void eliminar(Long id) {
 		usuarios.remove(id);
 	}
+	
+	// Método específico de este DAO
+	
+	public Usuario obtenerPorEmail(String email) {
+		for(Usuario usuario: usuarios.values()) {
+			if(usuario.getEmail().equals(email)) {
+				return usuario;
+			}
+		}
+		
+		return null;
+	}
+	
+//	public Usuario obtenerPorEmail(String email) {
+//		Usuario resultado = null;
+//		
+//		for(Usuario usuario: usuarios.values()) {
+//			if(usuario.getEmail().equals(email)) {
+//				resultado = usuario;
+//				break;
+//			}
+//		}
+//		
+//		return resultado;
+//	}
 }
