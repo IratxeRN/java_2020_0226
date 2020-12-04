@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/vistas/includes/cabecera.jsp"%>
 
 <h1>Carrito de la compra</h1>
-
+<!-- ${carrito} -->
 <table class="table">
 	<thead>
 		<tr>
@@ -20,6 +20,7 @@
 				<th>${producto.value.nombre}</th>
 				<th><fmt:formatNumber type="currency" value="${producto.value.precioConDescuento}" /></th>
 				<th>${producto.value.cantidad}</th>
+				<!-- ${producto} -->
 			</tr>
 		</c:forEach>
 	</tbody>
