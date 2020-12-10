@@ -30,7 +30,7 @@
 					<td>${producto.cantidad}</td>
 					<td>${producto.unidadMedida}</td>
 					<td><fmt:formatNumber type="currency" value="${producto.precioUnidadMedida}" /></td>
-					<td>${producto.descuento} %</td>
+					<td><fmt:formatNumber type="percent" value="${producto.descuento / 100}" /></td>
 					<td>
 						<div class="btn-group" role="group" aria-label="Opciones">
 							<a class="btn btn-primary btn-sm" href="#">Editar</a>
