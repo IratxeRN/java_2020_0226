@@ -64,4 +64,4 @@
 			</div>
 		</nav>
 	</header>
-	<main class="container-fluid pt-3">
+	<main class="container pt-3">
