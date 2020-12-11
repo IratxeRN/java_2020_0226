@@ -16,10 +16,16 @@ public class Producto implements Serializable {
 	private String unidadMedida;
 	private BigDecimal precioUnidadMedida;
 	private Integer cantidad;
-	
+
+	public Producto(String id, String nombre, String descripcion, String urlImagen, String precio, String descuento,
+			String unidadMedida, String precioUnidadMedida, String cantidad) {
+		
+		this(id.trim().length() != 0 ? Long.parseLong(id) : null, nombre, descripcion, urlImagen, new BigDecimal(precio), Integer.parseInt(descuento),
+				unidadMedida, new BigDecimal(precioUnidadMedida), Integer.parseInt(cantidad));
+	}
+
 	public Producto(Long id, String nombre, String descripcion, String urlImagen, BigDecimal precio, Integer descuento,
 			String unidadMedida, BigDecimal precioUnidadMedida, Integer cantidad) {
-		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -102,17 +108,17 @@ public class Producto implements Serializable {
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
-	
+
 	public BigDecimal getPrecioConDescuento() {
-		if(descuento == null || descuento == 0) {
+		if (descuento == null || descuento == 0) {
 			return precio;
 		}
-		
-		if(descuento == 100) {
+
+		if (descuento == 100) {
 			return BigDecimal.ZERO;
 		}
-		
-		//return precio - (precio * (descuento / 100));
+
+		// return precio - (precio * (descuento / 100));
 		return precio.subtract(precio.multiply(new BigDecimal(descuento).divide(new BigDecimal(100))));
 	}
 
