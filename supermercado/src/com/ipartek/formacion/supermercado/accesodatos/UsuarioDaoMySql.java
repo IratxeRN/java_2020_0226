@@ -23,6 +23,25 @@ public class UsuarioDaoMySql implements DaoUsuario {
 	private static final String SQL_UPDATE = "UPDATE usuarios SET email = ?, password = ? WHERE id = ?";
 	private static final String SQL_DELETE = "DELETE FROM usuarios WHERE id = ?";
 
+	static {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			throw new AccesoDatosException("No se ha encontrado el driver de JDBC para MySQL", e);
+		}
+	}
+	
+	// SINGLETON
+	
+	private UsuarioDaoMySql() {}
+	
+	private final static UsuarioDaoMySql INSTANCIA = new UsuarioDaoMySql();
+	
+	public static UsuarioDaoMySql getInstancia() {
+		return INSTANCIA;
+	}
+	
+	// FIN SINGLETON
 	@Override
 	public Iterable<Usuario> obtenerTodos() {
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);
