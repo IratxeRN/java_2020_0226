@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 import com.ipartek.formacion.supermercado.modelos.Usuario;
 
-public class UsuarioDaoMySql implements Dao<Usuario> {
+public class UsuarioDaoMySql implements DaoUsuario {
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado?serverTimezone=UTC";
 	private static final String USER = "root";
 	private static final String PASS = "admin";
 
 	private static final String SQL_SELECT = "SELECT * FROM usuarios";
 	private static final String SQL_SELECT_ID = "SELECT * FROM usuarios WHERE id = ?";
+	private static final String SQL_SELECT_EMAIL = "SELECT * FROM usuarios WHERE email = ?";
 
 	private static final String SQL_INSERT = "INSERT INTO usuarios (email, password) VALUES (?, ?)";
 	private static final String SQL_UPDATE = "UPDATE usuarios SET email = ?, password = ? WHERE id = ?";
@@ -62,6 +63,28 @@ public class UsuarioDaoMySql implements Dao<Usuario> {
 
 		} catch (SQLException e) {
 			throw new AccesoDatosException("No se ha podido recibir el usuario " + id, e);
+		}
+	}
+	
+	@Override
+	public Usuario obtenerPorEmail(String email) {
+		try (Connection con = DriverManager.getConnection(URL, USER, PASS);
+				PreparedStatement ps = con.prepareStatement(SQL_SELECT_EMAIL);) {
+
+			ps.setString(1, email);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				Usuario usuario = null;
+
+				if (rs.next()) {
+					usuario = new Usuario(rs.getLong("id"), rs.getString("email"), rs.getString("password"));
+				}
+
+				return usuario;
+			}
+
+		} catch (SQLException e) {
+			throw new AccesoDatosException("No se ha podido recibir el usuario " + email, e);
 		}
 	}
 

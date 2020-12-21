@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ipartek.formacion.supermercado.accesodatos.Dao;
-import com.ipartek.formacion.supermercado.accesodatos.ProductoDaoTreeMap;
 import com.ipartek.formacion.supermercado.modelos.Producto;
 
 @WebServlet("/agregartodocarrito")
@@ -25,7 +24,7 @@ public class AgregarTodoCarritoServlet extends HttpServlet {
 
 		System.out.println("doGet AgregarTodoCarritoServlet");
 		
-		Dao<Producto> dao = ProductoDaoTreeMap.getInstancia();
+		Dao<Producto> dao = Configuracion.daoProductos;
 		
 		LinkedHashMap<Long, Producto> carrito = new LinkedHashMap<>();
 		
