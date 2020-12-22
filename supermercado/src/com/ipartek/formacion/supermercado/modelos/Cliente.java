@@ -26,6 +26,8 @@ public class Cliente {
 		setCif(cif);
 		setFechaNacimiento(fechaNacimiento);
 	}
+	
+	Cliente() {}
 
 	public Long getId() {
 		return id;
@@ -40,14 +42,17 @@ public class Cliente {
 
 		try {
 			setId(id != null && id.trim().length() > 0 ? Long.parseLong(id) : null);
+			setErrorId(null);
 		} catch (NumberFormatException e) {
 			setErrorId("El id debe ser numérico");
 		}
 	}
 
 	public void setId(Long id) {
-		if(id != null && id < 1) {
+		if(id != null && id < 1L) {
 			setErrorId("El id debe ser mayor que 0");
+		} else {
+			setErrorId(null);
 		}
 		
 		this.id = id;
@@ -60,6 +65,8 @@ public class Cliente {
 	public void setNombre(String nombre) {
 		if(nombre == null || !nombre.matches("\\p{Lu}\\p{Ll}{2}[ \\p{L}]*")) {//nombre.trim().length() < 3) {
 			setErrorNombre("El nombre es obligatorio y debe tener al menos 3 caracteres");
+		} else {
+			setErrorNombre(null);
 		}
 		this.nombre = nombre;
 	}
@@ -69,12 +76,12 @@ public class Cliente {
 	}
 
 	public void setApellidos(String apellidos) {
-		if(apellidos != null && apellidos.trim().length() == 0) {
-			this.apellidos = null;
-		} 
+		apellidos = apellidos == null || apellidos.trim().length() == 0 ? null : apellidos;
 		
-		if(this.apellidos != null && !apellidos.matches("\\p{Lu}\\p{Ll}{2}[ \\p{L}]*")) {
+		if(apellidos != null && !apellidos.matches("\\p{Lu}\\p{Ll}{2}[ \\p{L}]*")) {
 			setErrorApellidos("Los apellidos no son obligatorios, pero deben tener al menos 3 letras");
+		} else {
+			setErrorApellidos(null);
 		}
 		
 		this.apellidos = apellidos;
@@ -88,6 +95,8 @@ public class Cliente {
 		// B12345678 X1234567A 12345678Z
 		if(cif == null || !cif.matches("[ABCDEFGHJPQRSUVNW]\\d{8}|[XYZ]\\d{7}[A-Z]|\\d{8}[A-Z]")) {
 			setErrorCif("El CIF debe tener uno de los siguientes formatos: B12345678 X1234567A 12345678Z");
+		} else {
+			setErrorCif(null);
 		}
 		this.cif = cif;
 	}
@@ -102,14 +111,17 @@ public class Cliente {
 			// if(fechaNacimiento == null || fechaNacimiento.trim().length() == 0) { setErrorFechaNacimiento("La fecha es obligatoria"); return; }
 			// setFechaNacimiento(LocalDate.parse(fechaNacimiento));
 			setFechaNacimiento(fechaNacimiento != null && fechaNacimiento.trim().length() > 0 ? LocalDate.parse(fechaNacimiento) : null);
+			setErrorFechaNacimiento(null);
 		} catch (Exception e) {
 			setErrorFechaNacimiento("La fecha de nacimiento tiene que tener un formato por ejemplo: 2020-01-31");
 		}
 	}
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		if(fechaNacimiento.isAfter(LocalDate.now().minusYears(18))) {
+		if(fechaNacimiento != null && fechaNacimiento.isAfter(LocalDate.now().minusYears(18))) {
 			setErrorFechaNacimiento("Debes ser mayor de edad y no haber nacido en el futuro");
+		} else {
+			setErrorFechaNacimiento(null);
 		}
 		
 		this.fechaNacimiento = fechaNacimiento;
