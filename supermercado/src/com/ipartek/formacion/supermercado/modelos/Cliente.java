@@ -6,21 +6,50 @@ public class Cliente {
 	private Long id;
 	private String nombre, apellidos, cif;
 	private LocalDate fechaNacimiento;
-	
+
+	private boolean correcto = true;
+
+	private String errorId, errorNombre, errorApellidos, errorCif, errorFechaNacimiento;
+
+	public Cliente(String id, String nombre, String apellidos, String cif, String fechaNacimiento) {
+		setId(id);
+		setNombre(nombre);
+		setApellidos(apellidos);
+		setCif(cif);
+		setFechaNacimiento(fechaNacimiento);
+	}
+
 	public Cliente(Long id, String nombre, String apellidos, String cif, LocalDate fechaNacimiento) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.cif = cif;
-		this.fechaNacimiento = fechaNacimiento;
+		setId(id);
+		setNombre(nombre);
+		setApellidos(apellidos);
+		setCif(cif);
+		setFechaNacimiento(fechaNacimiento);
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+	public void setId(String id) {
+//		if(id != null) {
+//			setId(Long.parseLong(id));
+//		} else {
+//			setId((Long)null);
+//		}
+
+		try {
+			setId(id != null && id.trim().length() > 0 ? Long.parseLong(id) : null);
+		} catch (NumberFormatException e) {
+			setErrorId("El id debe ser numérico");
+		}
+	}
+
 	public void setId(Long id) {
+		if(id != null && id < 1) {
+			setErrorId("El id debe ser mayor que 0");
+		}
+		
 		this.id = id;
 	}
 
@@ -29,6 +58,9 @@ public class Cliente {
 	}
 
 	public void setNombre(String nombre) {
+		if(nombre == null || !nombre.matches("\\p{Lu}\\p{Ll}{2}[ \\p{L}]*")) {//nombre.trim().length() < 3) {
+			setErrorNombre("El nombre es obligatorio y debe tener al menos 3 caracteres");
+		}
 		this.nombre = nombre;
 	}
 
@@ -37,6 +69,14 @@ public class Cliente {
 	}
 
 	public void setApellidos(String apellidos) {
+		if(apellidos != null && apellidos.trim().length() == 0) {
+			this.apellidos = null;
+		} 
+		
+		if(this.apellidos != null && !apellidos.matches("\\p{Lu}\\p{Ll}{2}[ \\p{L}]*")) {
+			setErrorApellidos("Los apellidos no son obligatorios, pero deben tener al menos 3 letras");
+		}
+		
 		this.apellidos = apellidos;
 	}
 
@@ -45,6 +85,10 @@ public class Cliente {
 	}
 
 	public void setCif(String cif) {
+		// B12345678 X1234567A 12345678Z
+		if(cif == null || !cif.matches("[ABCDEFGHJPQRSUVNW]\\d{8}|[XYZ]\\d{7}[A-Z]|\\d{8}[A-Z]")) {
+			setErrorCif("El CIF debe tener uno de los siguientes formatos: B12345678 X1234567A 12345678Z");
+		}
 		this.cif = cif;
 	}
 
@@ -52,8 +96,72 @@ public class Cliente {
 		return fechaNacimiento;
 	}
 
+	public void setFechaNacimiento(String fechaNacimiento) {
+		try {
+			// Si fuera obligatorio:
+			// if(fechaNacimiento == null || fechaNacimiento.trim().length() == 0) { setErrorFechaNacimiento("La fecha es obligatoria"); return; }
+			// setFechaNacimiento(LocalDate.parse(fechaNacimiento));
+			setFechaNacimiento(fechaNacimiento != null && fechaNacimiento.trim().length() > 0 ? LocalDate.parse(fechaNacimiento) : null);
+		} catch (Exception e) {
+			setErrorFechaNacimiento("La fecha de nacimiento tiene que tener un formato por ejemplo: 2020-01-31");
+		}
+	}
+
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public boolean isCorrecto() {
+		return correcto;
+	}
+
+	public void setCorrecto(boolean correcto) {
+		this.correcto = correcto;
+	}
+
+	public String getErrorId() {
+		return errorId;
+	}
+
+	public void setErrorId(String errorId) {
+		correcto = false;
+		this.errorId = errorId;
+	}
+
+	public String getErrorNombre() {
+		return errorNombre;
+	}
+
+	public void setErrorNombre(String errorNombre) {
+		correcto = false;
+		this.errorNombre = errorNombre;
+	}
+
+	public String getErrorApellidos() {
+		return errorApellidos;
+	}
+
+	public void setErrorApellidos(String errorApellidos) {
+		correcto = false;
+		this.errorApellidos = errorApellidos;
+	}
+
+	public String getErrorCif() {
+		return errorCif;
+	}
+
+	public void setErrorCif(String errorCif) {
+		correcto = false;
+		this.errorCif = errorCif;
+	}
+
+	public String getErrorFechaNacimiento() {
+		return errorFechaNacimiento;
+	}
+
+	public void setErrorFechaNacimiento(String errorFechaNacimiento) {
+		correcto = false;
+		this.errorFechaNacimiento = errorFechaNacimiento;
 	}
 
 	@Override
@@ -110,6 +218,5 @@ public class Cliente {
 		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", cif=" + cif
 				+ ", fechaNacimiento=" + fechaNacimiento + "]";
 	}
-	
-	
+
 }
