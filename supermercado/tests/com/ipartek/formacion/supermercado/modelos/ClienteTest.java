@@ -1,8 +1,10 @@
 package com.ipartek.formacion.supermercado.modelos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -36,6 +38,27 @@ class ClienteTest {
 	}
 
 	@Test
+	void testConstructorClienteString() {
+		cliente = new Cliente("-5", "alskdfjlks", "kalsjdflds", "alskdjfl", "alkdjsafls");
+
+		assertFalse(cliente.isCorrecto());
+
+		cliente = new Cliente("1", "Pepe", "Pérez", "12345678Z", "");
+
+		assertTrue(cliente.isCorrecto());
+
+		cliente = new Cliente("-5", "alskdfjlks", "kalsjdflds", "alskdjfl", "alkdjsafls");
+		
+		cliente.setId("5");
+
+		assertFalse(cliente.isCorrecto());
+		
+		cliente = new Cliente("1", "Pepe", "Pérez", "12345678Z", "");
+
+		assertTrue(cliente.isCorrecto());
+	}
+
+	@Test
 	void testSetIdString() {
 		String id = null;
 		cliente.setId(id);
@@ -50,6 +73,11 @@ class ClienteTest {
 		assertNull(cliente.getErrorId());
 
 		id = "alsdjkhfalsjdhf";
+		cliente.setId(id);
+
+		assertNotNull(cliente.getErrorId());
+
+		id = "-5";
 		cliente.setId(id);
 
 		assertNotNull(cliente.getErrorId());
@@ -138,7 +166,7 @@ class ClienteTest {
 		assertNotNull(cliente.getErrorApellidos());
 
 		apellidos = "alsdkfj";
-		
+
 		cliente.setApellidos(apellidos);
 
 		assertNotNull(cliente.getErrorApellidos());
@@ -146,10 +174,9 @@ class ClienteTest {
 		apellidos = "Lete García";
 
 		cliente.setApellidos(apellidos);
-		
+
 		assertEquals(apellidos, cliente.getApellidos());
 		assertNull(cliente.getErrorApellidos());
-
 
 	}
 
@@ -216,6 +243,12 @@ class ClienteTest {
 
 		assertNull(cliente.getFechaNacimiento());
 		assertNull(cliente.getErrorFechaNacimiento());
+
+		fechaNacimiento = LocalDate.now().toString();
+
+		cliente.setFechaNacimiento(fechaNacimiento);
+
+		assertNotNull(cliente.getErrorFechaNacimiento());
 
 		fechaNacimiento = "lakjsdhflakjsd";
 
