@@ -72,6 +72,11 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+			
+			<%-- 
+				<c:remove var="alertaNivel" scope="session" />
+				<c:remove var="alertaTexto" />
+			--%>
 		</c:if>
 	</header>
 	<main class="container pt-3">
