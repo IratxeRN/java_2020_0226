@@ -24,7 +24,7 @@
 				<option value="0">Introduzca el departamento</option>
 				
 				<c:forEach items="${departamentos}" var="departamento">
-					<option value="${departamento.id}">${departamento.nombre}</option>
+					<option value="${departamento.id}" ${departamento.id == producto.departamento.id ? 'selected' : ''}>${departamento.nombre}</option>
 				</c:forEach>
 			</select>
 			<div class="valid-feedback">Departamento correcto</div>
