@@ -2,8 +2,6 @@ package com.ipartek.formacion.supermercado.controladores.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.ipartek.formacion.supermercado.accesodatos.Dao;
+import com.ipartek.formacion.supermercado.accesodatos.DepartamentoDaoMySql;
 import com.ipartek.formacion.supermercado.accesodatos.ProductoDaoTreeMap;
 import com.ipartek.formacion.supermercado.modelos.Departamento;
 import com.ipartek.formacion.supermercado.modelos.Producto;
@@ -50,12 +49,7 @@ public class ProductoServlet extends HttpServlet {
 			request.setAttribute("producto", producto);
 		}
 
-		Set<Departamento> departamentos = new HashSet<Departamento>();
-		
-		departamentos.add(new Departamento(1L, "Lácteos", null));
-		departamentos.add(new Departamento(2L, "Frescos", null));
-		departamentos.add(new Departamento(3L, "Congelados", null));
-		departamentos.add(new Departamento(4L, "Electrónica", null));
+		Iterable<Departamento> departamentos = DepartamentoDaoMySql.getInstancia().obtenerTodos();
 		
 		request.setAttribute("departamentos", departamentos);
 		
