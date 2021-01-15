@@ -16,6 +16,7 @@ import com.ipartek.formacion.supermercado.modelos.Producto;
 
 public class ProductoDaoMySql implements Dao<Producto> {
 	private static final String SQL_SELECT = "{call productos_obtener_todos()}";
+	private static final String SQL_SELECT_BORRADOS = "{call productos_obtener_borrados()}";
 	private static final String SQL_SELECT_ID = "{call productos_obtener_por_id(?)}";
 	
 	private static final String SQL_INSERT = "{call productos_insertar(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
@@ -54,8 +55,17 @@ public class ProductoDaoMySql implements Dao<Producto> {
 	
 	@Override
 	public Iterable<Producto> obtenerTodos() {
+		return obtenerRegistros(SQL_SELECT);
+	}
+
+	@Override
+	public Iterable<Producto> obtenerBorrados() {
+		return obtenerRegistros(SQL_SELECT_BORRADOS);
+	}
+
+	private Iterable<Producto> obtenerRegistros(String consulta) {
 		try (Connection con = obtenerConexion();
-				CallableStatement cs = con.prepareCall(SQL_SELECT);
+				CallableStatement cs = con.prepareCall(consulta);
 				ResultSet rs = cs.executeQuery()) {
 
 			ArrayList<Producto> productos = new ArrayList<>();

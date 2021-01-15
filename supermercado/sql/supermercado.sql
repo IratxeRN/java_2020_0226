@@ -256,7 +256,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,'Producto primero','Descripción','tech.jfif',12.34,20,'litros',12.34,1,8,1),(2,'Producto2','Descripcion2',NULL,34.56,27,NULL,NULL,2,1,1),(3,'Producto3',NULL,NULL,67.89,NULL,NULL,NULL,3,2,1),(6,'Viejo','Prueba de descripción','tech (2).jfif',98.93,8,'kg',2.05,6,1,1);
+INSERT INTO `productos` VALUES (1,'Producto primero','Descripción','tech.jfif',12.34,20,'litros',12.34,1,8,1),(2,'Producto2','Descripcion2',NULL,34.56,27,NULL,NULL,2,1,0),(3,'Producto3',NULL,NULL,67.89,NULL,NULL,NULL,3,2,0),(6,'Viejo','Prueba de descripción','tech (2).jfif',98.93,8,'kg',2.05,6,1,1);
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,6 +414,25 @@ UPDATE productos
 SET nombre = p_nombre, descripcion = p_descripcion, url_imagen = p_url_imagen, precio = p_precio, descuento = p_descuento, 
 	unidad_medida = p_unidad_medida, precio_unidad_medida = p_precio_unidad_medida, cantidad = p_cantidad, 
     departamentos_id = p_departamentos_id WHERE id = p_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `productos_obtener_borrados` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `productos_obtener_borrados`()
+BEGIN
+SELECT * FROM productos p JOIN departamentos d ON p.departamentos_id = d.id WHERE p.activo = 0;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -580,4 +599,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-15 10:00:18
+-- Dump completed on 2021-01-15 10:49:23
