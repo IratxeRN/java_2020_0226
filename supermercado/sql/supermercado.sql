@@ -243,6 +243,7 @@ CREATE TABLE `productos` (
   `precio_unidad_medida` decimal(20,2) DEFAULT NULL,
   `cantidad` int DEFAULT NULL,
   `departamentos_id` int NOT NULL,
+  `activo` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `fk_productos_departamentos1_idx` (`departamentos_id`),
   CONSTRAINT `fk_productos_departamentos1` FOREIGN KEY (`departamentos_id`) REFERENCES `departamentos` (`id`)
@@ -255,7 +256,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
-INSERT INTO `productos` VALUES (1,'Producto primero','Descripción','tech.jfif',12.34,20,'litros',12.34,1,8),(2,'Producto2','Descripcion2',NULL,34.56,27,NULL,NULL,2,1),(3,'Producto3',NULL,NULL,67.89,NULL,NULL,NULL,3,2),(6,'Viejo','Prueba de descripción','tech (2).jfif',98.93,8,'kg',2.05,6,1);
+INSERT INTO `productos` VALUES (1,'Producto primero','Descripción','tech.jfif',12.34,20,'litros',12.34,1,8,1),(2,'Producto2','Descripcion2',NULL,34.56,27,NULL,NULL,2,1,1),(3,'Producto3',NULL,NULL,67.89,NULL,NULL,NULL,3,2,1),(6,'Viejo','Prueba de descripción','tech (2).jfif',98.93,8,'kg',2.05,6,1,1);
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +369,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `productos_borrar`(p_id INT)
 BEGIN
-DELETE FROM productos WHERE id = p_id;
+UPDATE productos SET activo = 0 WHERE id = p_id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -431,7 +432,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `productos_obtener_por_id`(p_id INT)
 BEGIN
-SELECT * FROM productos p JOIN departamentos d ON p.departamentos_id = d.id WHERE p.id = p_id;
+SELECT * FROM productos p JOIN departamentos d ON p.departamentos_id = d.id WHERE p.id = p_id AND p.activo = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -450,7 +451,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `productos_obtener_todos`()
 BEGIN
-SELECT * FROM productos p JOIN departamentos d ON p.departamentos_id = d.id;
+SELECT * FROM productos p JOIN departamentos d ON p.departamentos_id = d.id WHERE p.activo = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -579,4 +580,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-15  9:48:26
+-- Dump completed on 2021-01-15 10:00:18
