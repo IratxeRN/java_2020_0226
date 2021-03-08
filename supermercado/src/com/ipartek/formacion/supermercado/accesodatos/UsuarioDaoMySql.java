@@ -13,7 +13,7 @@ import com.ipartek.formacion.supermercado.modelos.Usuario;
 public class UsuarioDaoMySql implements DaoUsuario {
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado?serverTimezone=UTC";
 	private static final String USER = "root";
-	private static final String PASS = "admin";
+	private static final String PASS = "";
 
 	private static final String SQL_SELECT = "SELECT * FROM usuarios";
 	private static final String SQL_SELECT_ID = "SELECT * FROM usuarios WHERE id = ?";
@@ -30,17 +30,18 @@ public class UsuarioDaoMySql implements DaoUsuario {
 			throw new AccesoDatosException("No se ha encontrado el driver de JDBC para MySQL", e);
 		}
 	}
-	
+
 	// SINGLETON
-	
-	private UsuarioDaoMySql() {}
-	
+
+	private UsuarioDaoMySql() {
+	}
+
 	private final static UsuarioDaoMySql INSTANCIA = new UsuarioDaoMySql();
-	
+
 	public static UsuarioDaoMySql getInstancia() {
 		return INSTANCIA;
 	}
-	
+
 	// FIN SINGLETON
 	@Override
 	public Iterable<Usuario> obtenerTodos() {
@@ -84,7 +85,7 @@ public class UsuarioDaoMySql implements DaoUsuario {
 			throw new AccesoDatosException("No se ha podido recibir el usuario " + id, e);
 		}
 	}
-	
+
 	@Override
 	public Usuario obtenerPorEmail(String email) {
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);
@@ -132,7 +133,7 @@ public class UsuarioDaoMySql implements DaoUsuario {
 
 			ps.setString(1, usuario.getEmail());
 			ps.setString(2, usuario.getPassword());
-			ps.setLong(3,  usuario.getId());
+			ps.setLong(3, usuario.getId());
 
 			int numeroRegistrosModificados = ps.executeUpdate();
 

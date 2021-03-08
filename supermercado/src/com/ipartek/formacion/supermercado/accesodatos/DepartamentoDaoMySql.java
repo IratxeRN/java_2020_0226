@@ -13,20 +13,20 @@ import com.ipartek.formacion.supermercado.modelos.Departamento;
 public class DepartamentoDaoMySql implements Dao<Departamento> {
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado?serverTimezone=UTC";
 	private static final String USER = "root";
-	private static final String PASS = "admin";
+	private static final String PASS = "";
 
 	private static final String SQL_SELECT = "SELECT * FROM departamentos";
 	private static final String SQL_INSERT = "INSERT INTO departamentos (nombre, descripcion) VALUES (?,?)";
-	
-	private DepartamentoDaoMySql() {}
-	
+
+	private DepartamentoDaoMySql() {
+	}
+
 	private final static DepartamentoDaoMySql INSTANCIA = new DepartamentoDaoMySql();
-	
-	
+
 	public static DepartamentoDaoMySql getInstancia() {
 		return INSTANCIA;
 	}
-	
+
 	static {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -34,6 +34,7 @@ public class DepartamentoDaoMySql implements Dao<Departamento> {
 			throw new AccesoDatosException("No se ha encontrado el driver de JDBC para MySQL", e);
 		}
 	}
+
 	@Override
 	public Iterable<Departamento> obtenerTodos() {
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);
@@ -54,6 +55,7 @@ public class DepartamentoDaoMySql implements Dao<Departamento> {
 			throw new AccesoDatosException("No se ha podido consultar la lista de departamentos", e);
 		}
 	}
+
 	@Override
 	public Departamento crearYObtener(Departamento departamento) {
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);
@@ -67,22 +69,19 @@ public class DepartamentoDaoMySql implements Dao<Departamento> {
 			if (numeroRegistrosInsertados != 1) {
 				throw new AccesoDatosException("Se han insertado " + numeroRegistrosInsertados + " registros");
 			}
-			
+
 			try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	                departamento.setId(generatedKeys.getLong(1));
-	            }
-	            else {
-	                throw new AccesoDatosException("Error al buscar el ID generado de departamento");
-	            }
-	        }
-			
+				if (generatedKeys.next()) {
+					departamento.setId(generatedKeys.getLong(1));
+				} else {
+					throw new AccesoDatosException("Error al buscar el ID generado de departamento");
+				}
+			}
+
 			return departamento;
 		} catch (SQLException e) {
 			throw new AccesoDatosException("No se ha podido insertar el departamento " + departamento, e);
 		}
 	}
-	
-	
 
 }
